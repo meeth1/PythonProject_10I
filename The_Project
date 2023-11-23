@@ -1,0 +1,97 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import math 
+
+def calculations_mode():
+    print("CALCULATIONS MODE")
+    while True:
+        prob = input("Enter problem (q to quit): ")
+        if prob == "q":
+            break
+        try:
+            result = eval(prob)
+            print("Result:", result)
+        except Exception as e:
+            print("Invalid input:", str(e))
+
+def graph_mode():
+    print("GRAPH MODE")
+    while True:
+        eq = input("Enter equation (q to quit): ")
+        if eq == "q":
+            break
+        try:
+            r1 = float(input("Enter range start: "))
+            r2 = float(input("Enter range end: "))
+            x = np.linspace(r1, r2, num=100)
+            y = eval(eq, {'x': x, 'np': np, 'math': math})
+            plt.plot(x, y)
+            plt.title("Graph of " + eq)
+            plt.xlabel('x')
+            plt.ylabel('y')
+            plt.grid(True)
+            plt.show()
+        except Exception as e:
+            print("Invalid input:", str(e))
+
+def equationroots():
+    print("LINEAR/QUADRATIC EQUATIONS MODE")
+    while True:
+        print("""A quadratic equation is in the form ax^2+bx+c=0 while a linear one is of the form bx+c=0\n""")
+        a = int(input("Enter value of coefficient a (q to quit): "))
+        b = int(input("Enter value of coefficient b: "))
+        c = int(input("Enter value of coefficient c: \n"))
+        print("Your equation is: ", str(a)+"x^2 + "+str(b)+"x + "+str(c)+" = 0")
+        if a == "q":
+            break
+        try:
+            dis = b * b - 4 * a * c 
+            rootval = math.sqrt(abs(dis))
+
+            if a == 0: 
+                print("Equation entered is not quadratic\n")
+                print("x= ", -c/b, "\n")
+
+            else:    
+              if dis > 0: 
+                  print("Equation has real and different roots: \n") 
+                  print((-b + rootval)/(2 * a), "\n") 
+                  print((-b - rootval)/(2 * a), "\n") 
+
+              elif dis == 0: 
+                  print("Equation has real and same roots: \n") 
+                  print(-b / (2 * a), "\n") 
+
+              else:
+                  print("Equation has complex Roots: \n") 
+                  print(-b / (2 * a), "+ i", rootval, "\n") 
+                  print(-b / (2 * a), "- i", rootval, "\n")
+
+        except Exception as e:
+            print("Invalid input:", str(e))
+
+
+while True:
+    print(""" 
+    1. c (Normal calculation)
+    2. g (Graphing)
+    3. h (Help)
+    4. e (Solve linear or quadratic equation)
+    5. q (Quit)
+    """)
+    mode = input().lower()
+    if mode == "c":
+        calculations_mode()
+    elif mode == "g":
+        graph_mode()
+    elif mode == "h":
+        print("""You may enter more advanced functions as follows:
+  np.sin(x), np.log(x), np.ln(x), np.arcsin(x), etc.
+  """)
+    elif mode == "e":
+        equationroots()
+    elif mode == "q":
+        print("Exiting the program.")
+        break
+    else:
+        print("Invalid input. Please select c, g, s, or q.")
